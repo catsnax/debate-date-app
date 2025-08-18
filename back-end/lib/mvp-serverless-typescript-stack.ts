@@ -16,7 +16,7 @@ export class Try extends Stack {
     super(scope, id, props);
 
     const table = new dynamodb.Table(this, "AppDataTable", {
-      tableName: "todoTable",
+      tableName: "debateDateTable",
       partitionKey: { name: "PK", type: dynamodb.AttributeType.STRING },
       sortKey: { name: "SK", type: dynamodb.AttributeType.STRING },
       removalPolicy: RemovalPolicy.DESTROY,
@@ -26,7 +26,7 @@ export class Try extends Stack {
       runtime: lambda.Runtime.NODEJS_18_X,
       code: lambda.Code.fromAsset(path.join(__dirname, "../src/dist")),
       handler: "index.handler",
-      functionName: "todo-function",
+      functionName: "user-function",
     });
 
     table.grantReadWriteData(fn);
@@ -105,6 +105,13 @@ export class Try extends Stack {
     httpApi.addRoutes({
       path: "/items/{id}",
       methods: [HttpMethod.GET, HttpMethod.DELETE, HttpMethod.PATCH],
+      integration: lambdaIntegration,
+      authorizer,
+    });
+
+    httpApi.addRoutes({
+      path: "/users",
+      methods: [HttpMethod.GET, HttpMethod.POST],
       integration: lambdaIntegration,
       authorizer,
     });
