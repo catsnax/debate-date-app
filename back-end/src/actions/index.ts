@@ -16,7 +16,7 @@ import { stat } from "fs";
 
 const client = DynamoDBDocumentClient.from(new DynamoDBClient({}));
 type RouteHandler = (event: any, id?: string) => Promise<any>;
-const tableName = "todoTable";
+const tableName = "debateDateTable";
 
 // Route handler map
 const routeHandlers: Record<string, RouteHandler> = {
