@@ -17,18 +17,23 @@ import {
 } from "react-aria-components";
 import { ChevronDown } from "lucide-react";
 import { CheckboxGroup, Checkbox } from "react-aria-components";
-import { useState } from "react";
+import { use, useState } from "react";
 
 function EventForm() {
-  const [form, setForm] = useState([{}]);
-
+  const [name, setName] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
+  const [format, setFormat] = useState();
+  const [division, setDivision] = useState([]);
+  const [debaterPrice, setDebaterPrice] = useState();
+  const [adjudicatorPrice, setAdjudicatorPrice] = useState();
   return (
     <DialogTrigger>
       <Button className="text-black">Create new event</Button>
       <ModalOverlay>
         <Modal>
           <Dialog>
-            <form className="text-black flex flex-col space-y-1">
+            <form className="text-black flex flex-col space-y-2">
               <h1> Create Debate Tournament</h1>
               <TextField>
                 <Label>Tournament Name</Label>
@@ -90,17 +95,28 @@ function EventForm() {
                   High School{" "}
                 </Checkbox>
               </CheckboxGroup>
-              <div className="flex">
+              <Label className="text-left react-aria-Label font-bold text-lg">
+                Prices
+              </Label>
+              <div className="flex flex-col xl:flex-row ">
                 <TextField>
-                  <Label>Debater Price</Label>
+                  <Label>Debater</Label>
                   <br></br>
                   <Input
                     placeholder="e.g, ₱400"
                     className="bg-gray-200 w-11/12 px-4 pr-4 rounded-md py-2"
                   />
                 </TextField>
-                <TextField className="ml-auto">
-                  <Label>Adjudicator Price</Label>
+                <TextField className="xl:ml-auto">
+                  <Label>Adjudicator</Label>
+                  <br></br>
+                  <Input
+                    placeholder="e.g, ₱400"
+                    className="bg-gray-200 w-11/12 px-4 pr-4 rounded-md py-2 "
+                  />
+                </TextField>
+                <TextField className="xl:ml-auto">
+                  <Label>Ghost Judge Fee</Label>
                   <br></br>
                   <Input
                     placeholder="e.g, ₱400"
@@ -109,7 +125,7 @@ function EventForm() {
                 </TextField>
               </div>
 
-              <Label className="text-center react-aria-Label mt-2">
+              <Label className="text-left react-aria-Label font-bold text-lg">
                 Registration Links
               </Label>
               <TextField>

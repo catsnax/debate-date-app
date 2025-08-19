@@ -30,8 +30,16 @@
   max-width: 1000px;
   width: 33vw;
   min-width: 23rem;
-  height: 45rem;
+  height: 30rem;
+  overflow: scroll;
+  margin-top: 20px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+@media (width >= 80rem /* 1280px */) {
+  .react-aria-Dialog {
+    height: 45rem;
+  }
 }
 
 body {
