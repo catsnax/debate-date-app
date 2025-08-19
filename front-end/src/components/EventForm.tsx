@@ -19,21 +19,54 @@ import { ChevronDown } from "lucide-react";
 import { CheckboxGroup, Checkbox } from "react-aria-components";
 import { use, useState } from "react";
 
+type FormProp = {
+  name: string;
+  startDate: Date;
+  endDate: Date;
+  format: string;
+  divisions: string[];
+  debaterPrice: number;
+  adjudicatorPrice: number;
+  ghostJudgeFee: number;
+  phaseLink: string;
+  subsidizedLink: string;
+  tournamentInvite: string;
+};
+
 function EventForm() {
-  const [name, setName] = useState();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
-  const [format, setFormat] = useState();
-  const [division, setDivision] = useState([]);
-  const [debaterPrice, setDebaterPrice] = useState();
-  const [adjudicatorPrice, setAdjudicatorPrice] = useState();
+  const [formData, setFormData] = useState({} as FormProp);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+
+    const form: FormProp = {
+      name: data.get("name") as string,
+      startDate: new Date(data.get("startDate") as string),
+      endDate: new Date(data.get("endDate") as string),
+      format: data.get("format") as string,
+      divisions: data.getAll("divisions") as string[],
+      debaterPrice: Number(data.get("debaterPrice")),
+      adjudicatorPrice: Number(data.get("adjudicatorPrice")),
+      ghostJudgeFee: Number(data.get("ghostJudgeFee")),
+      phaseLink: data.get("phaseLink") as string,
+      subsidizedLink: data.get("subsidizedLink") as string,
+      tournamentInvite: data.get("tournamentInvite") as string,
+    };
+
+    console.log(form);
+  };
+
   return (
     <DialogTrigger>
       <Button className="text-black">Create new event</Button>
       <ModalOverlay>
         <Modal>
           <Dialog>
-            <form className="text-black flex flex-col space-y-2">
+            <form
+              className="text-black flex flex-col space-y-2"
+              onSubmit={handleSubmit}
+            >
               <h1> Create Debate Tournament</h1>
               <TextField>
                 <Label>Tournament Name</Label>
@@ -41,6 +74,7 @@ function EventForm() {
                 <Input
                   placeholder="Davao Novice Cup"
                   className="bg-gray-200 w-full p-2 rounded-md py-2"
+                  name="name"
                 />
               </TextField>
               <div className="flex">
@@ -50,6 +84,7 @@ function EventForm() {
                   <Input
                     className="bg-gray-200 w-8/12 min-w-[145px] xl:w-48 px-2 xl:pr-14 rounded-md py-2"
                     type="date"
+                    name="startDate"
                   />
                 </TextField>
                 <TextField className="ml-auto">
@@ -58,10 +93,11 @@ function EventForm() {
                   <Input
                     className="bg-gray-200 w-8/12 min-w-[145px] xl:w-48 px-2 xl:pr-14 rounded-md py-2"
                     type="date"
+                    name="endDate"
                   />{" "}
                 </TextField>
               </div>
-              <Select>
+              <Select name="format">
                 <Label>Format</Label>
                 <Button>
                   <SelectValue />
@@ -79,18 +115,21 @@ function EventForm() {
 
               <Label>Divisions</Label>
 
-              <CheckboxGroup className="react-aria-CheckboxGroup">
-                <Checkbox value="soccer" className="react-aria-Checkbox">
+              <CheckboxGroup
+                name="divisions"
+                className="react-aria-CheckboxGroup"
+              >
+                <Checkbox value="Open" className="react-aria-Checkbox">
                   <div className="checkbox" aria-hidden="true">
                     <svg viewBox="0 0 18 18"></svg>
                   </div>
                   Open{" "}
                 </Checkbox>
-                <Checkbox value="baseball" className="react-aria-Checkbox">
+                <Checkbox value="Novice" className="react-aria-Checkbox">
                   <div className="checkbox" aria-hidden="true"></div>
                   Novice{" "}
                 </Checkbox>
-                <Checkbox value="basketball" className="react-aria-Checkbox">
+                <Checkbox value="High School" className="react-aria-Checkbox">
                   <div className="checkbox" aria-hidden="true"></div>
                   High School{" "}
                 </Checkbox>
@@ -105,6 +144,7 @@ function EventForm() {
                   <Input
                     placeholder="e.g, ₱400"
                     className="bg-gray-200 w-11/12 px-4 pr-4 rounded-md py-2"
+                    name="debaterPrice"
                   />
                 </TextField>
                 <TextField className="xl:ml-auto">
@@ -113,6 +153,7 @@ function EventForm() {
                   <Input
                     placeholder="e.g, ₱400"
                     className="bg-gray-200 w-11/12 px-4 pr-4 rounded-md py-2 "
+                    name="adjudicatorPrice"
                   />
                 </TextField>
                 <TextField className="xl:ml-auto">
@@ -121,6 +162,7 @@ function EventForm() {
                   <Input
                     placeholder="e.g, ₱400"
                     className="bg-gray-200 w-11/12 px-4 pr-4 rounded-md py-2 "
+                    name="ghostJudgeFee"
                   />
                 </TextField>
               </div>
@@ -134,6 +176,7 @@ function EventForm() {
                 <Input
                   placeholder="https://phase1link.com"
                   className="bg-gray-200 px-4 w-full rounded-md py-2"
+                  name="phaseLink"
                 />
               </TextField>
               <TextField>
@@ -142,6 +185,7 @@ function EventForm() {
                 <Input
                   placeholder="https://phase1link.com"
                   className="bg-gray-200 px-4 w-full rounded-md py-2"
+                  name="subsidizedLink"
                 />
               </TextField>
               <TextField>
@@ -150,6 +194,7 @@ function EventForm() {
                 <Input
                   placeholder="https://phase1link.com"
                   className="bg-gray-200 px-4 w-full rounded-md py-2"
+                  name="tournamentInvite"
                 />
               </TextField>
               <div className="flex gap-2 ml-auto mt-6">
@@ -159,10 +204,9 @@ function EventForm() {
                 >
                   Cancel
                 </Button>
-
                 <Button
                   className="text-white bg-black p-2 px-5 rounded-md"
-                  slot="close"
+                  type="submit"
                 >
                   Create Tournament
                 </Button>
