@@ -28,7 +28,8 @@
   border-radius: 8px;
   padding: 2rem;
   max-width: 800px;
-  width: 33rem;
+  width: 33vw;
+  min-width: 23rem;
   height: 39rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }

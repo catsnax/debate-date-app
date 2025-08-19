@@ -32,7 +32,7 @@ function EventForm() {
                   <Label>Start Date</Label>
                   <br></br>
                   <Input
-                    className="bg-gray-200 px-4 pr-14 rounded-md py-2"
+                    className="bg-gray-200 w-8/12 min-w-[145px] lg:w-48 px-2 lg:pr-14 rounded-md py-2"
                     type="date"
                   />
                 </TextField>
@@ -40,7 +40,7 @@ function EventForm() {
                   <Label>End Date</Label>
                   <br></br>
                   <Input
-                    className="bg-gray-200 px-4 pr-14 rounded-md py-2"
+                    className="bg-gray-200 w-8/12 min-w-[145px] lg:w-48 px-2 lg:pr-14 rounded-md py-2"
                     type="date"
                   />{" "}
                 </TextField>
@@ -85,7 +85,7 @@ function EventForm() {
                   <br></br>
                   <Input
                     placeholder="e.g, ₱400"
-                    className="bg-gray-200 px-4 pr-4 rounded-md py-2"
+                    className="bg-gray-200 w-11/12 px-4 pr-4 rounded-md py-2"
                   />
                 </TextField>
                 <TextField className="ml-auto">
@@ -93,7 +93,7 @@ function EventForm() {
                   <br></br>
                   <Input
                     placeholder="e.g, ₱400"
-                    className="bg-gray-200 px-4 pr-4 rounded-md py-2 "
+                    className="bg-gray-200 w-11/12 px-4 pr-4 rounded-md py-2 "
                   />
                 </TextField>
               </div>
