@@ -17,22 +17,33 @@ import {
 } from "react-aria-components";
 import { ChevronDown } from "lucide-react";
 import { CheckboxGroup, Checkbox } from "react-aria-components";
+import { useState } from "react";
 
 function EventForm() {
+  const [form, setForm] = useState([{}]);
+
   return (
     <DialogTrigger>
       <Button className="text-black">Create new event</Button>
       <ModalOverlay>
         <Modal>
           <Dialog>
-            <form className="text-black flex flex-col">
+            <form className="text-black flex flex-col space-y-1">
               <h1> Create Debate Tournament</h1>
+              <TextField>
+                <Label>Tournament Name</Label>
+                <br></br>
+                <Input
+                  placeholder="Davao Novice Cup"
+                  className="bg-gray-200 w-full p-2 rounded-md py-2"
+                />
+              </TextField>
               <div className="flex">
                 <TextField>
                   <Label>Start Date</Label>
                   <br></br>
                   <Input
-                    className="bg-gray-200 w-8/12 min-w-[145px] lg:w-48 px-2 lg:pr-14 rounded-md py-2"
+                    className="bg-gray-200 w-8/12 min-w-[145px] xl:w-48 px-2 xl:pr-14 rounded-md py-2"
                     type="date"
                   />
                 </TextField>
@@ -40,7 +51,7 @@ function EventForm() {
                   <Label>End Date</Label>
                   <br></br>
                   <Input
-                    className="bg-gray-200 w-8/12 min-w-[145px] lg:w-48 px-2 lg:pr-14 rounded-md py-2"
+                    className="bg-gray-200 w-8/12 min-w-[145px] xl:w-48 px-2 xl:pr-14 rounded-md py-2"
                     type="date"
                   />{" "}
                 </TextField>
@@ -125,7 +136,7 @@ function EventForm() {
                   className="bg-gray-200 px-4 w-full rounded-md py-2"
                 />
               </TextField>
-              <div className="flex gap-2 ml-auto mt-10">
+              <div className="flex gap-2 ml-auto mt-6">
                 <Button
                   className="text-black bg-gray-300 p-2 px-5 rounded-md"
                   slot="close"
