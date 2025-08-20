@@ -16,21 +16,27 @@ async function fetchEvents() {
 }
 
 function RouteComponent() {
-  const queryClient = useQueryClient();
-
   const { data, isFetching } = useQuery({
     queryKey: ["events"],
     queryFn: fetchEvents,
   });
 
   console.log(data);
+  console.log(isFetching);
 
   return (
     <>
       <EventForm />
-      <div className="flex">
-        <Card />
-      </div>
+
+      {isFetching ? (
+        <div>Loading ... </div>
+      ) : (
+        <div className="flex overflow-auto gap-10">
+          {data?.map((tournament) => (
+            <Card key={tournament.SK} {...tournament} />
+          ))}
+        </div>
+      )}
     </>
   );
 }

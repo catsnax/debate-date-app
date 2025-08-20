@@ -5,18 +5,48 @@ import { PhilippinePeso } from "lucide-react";
 import { Link } from "react-aria-components";
 import { SquareArrowOutUpRight } from "lucide-react";
 
-function Card() {
+interface CardProps {
+  isFetching: boolean;
+  tournamentName: string;
+  startDate: string;
+  endDate: string;
+  format: string;
+  divisions: string[];
+  debaterPrice: number;
+  adjudicatorPrice: number;
+  ghostJudgeFee: number;
+  phaseLink: string;
+  subsidizedLink: string;
+  tournamentInvite: string;
+}
+
+function dateParser(inputDate: string) {
+  const date = new Date(inputDate);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const day = date.getDate().toString().padStart(2, "0");
+
+  return `${month}-${day}-${year}`;
+}
+
+function Card(props: CardProps) {
+  const firstDate = dateParser(props.startDate);
+  const secondDate = dateParser(props.endDate);
+
   return (
     <main className="p-12 bg-white rounded-lg shadow-2xl">
       <div className="flex  text-black flex-col w-[20vw] min-w-60 h-[460px] gap-2">
-        <h2 className="text-left font-semibold">Orgullo Intervarsity</h2>
+        <h2 className="text-left font-semibold">{props.tournamentName}</h2>
 
         <div className="flex">
-          <Calendar /> <h4>August 17-18, 2025</h4>
+          <Calendar />{" "}
+          <h4>
+            {firstDate} to {secondDate}
+          </h4>
         </div>
         <div className="flex">
           {" "}
-          <Trophy /> <h4> Format: British Parliamentary</h4>
+          <Trophy /> <h4> Format: {props.format}</h4>
         </div>
         <div className="flex">
           {" "}
@@ -24,8 +54,16 @@ function Card() {
           <h2 className="text-left"> Divisions</h2>
         </div>
         <div className="flex gap-2 text-white">
-          <div className="bg-black py-2 px-4 rounded-lg">Open</div>
-          <div className="bg-gray-500 py-2 px-4 rounded-lg">Novice</div>
+          {props.divisions.includes("Open") ? (
+            <div className="bg-black py-2 px-4 rounded-lg">Open </div>
+          ) : (
+            <></>
+          )}
+          {props.divisions.includes("Novice") ? (
+            <div className="bg-gray-500 py-2 px-4 rounded-lg">Novice</div>
+          ) : (
+            <></>
+          )}
         </div>
 
         <div className="flex">
@@ -34,21 +72,21 @@ function Card() {
         </div>
         <div className="flex gap-6">
           <h4 className="text-gray-700">Debater</h4>{" "}
-          <h4 className="ml-auto">₱400</h4>
+          <h4 className="ml-auto">₱{props.debaterPrice}</h4>
         </div>
         <div className="flex gap-6">
           <h4 className="text-gray-700"> Adjudicator</h4>{" "}
-          <h4 className="ml-auto">₱400</h4>
+          <h4 className="ml-auto">₱{props.adjudicatorPrice}</h4>
         </div>
         <div className="flex gap-6">
           <h4 className="text-gray-700"> Ghost Judge Fee</h4>{" "}
-          <h4 className="ml-auto">₱400</h4>
+          <h4 className="ml-auto">₱{props.ghostJudgeFee}</h4>
         </div>
 
         <div> Registration</div>
         <Link
           className="text-black bg-white border-gray-300 border-2 p-1 px-2 flex"
-          href="http://localhost:5174/"
+          href={props.subsidizedLink}
           target="_blank"
         >
           {" "}
@@ -58,7 +96,7 @@ function Card() {
 
         <Link
           className="text-black bg-white border-gray-300 border-2 p-1 px-2 flex"
-          href="http://localhost:5174/"
+          href={props.phaseLink}
           target="_blank"
         >
           {" "}
@@ -68,7 +106,7 @@ function Card() {
 
         <Link
           className="text-black bg-white border-gray-300 border-2  p-1 px-2 flex"
-          href="http://localhost:5174/"
+          href={props.tournamentInvite}
           target="_blank"
         >
           {" "}
