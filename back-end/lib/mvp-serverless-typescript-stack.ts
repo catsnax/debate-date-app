@@ -103,7 +103,7 @@ export class Try extends Stack {
 
     const lambdaIntegration = new HttpLambdaIntegration("CrudIntegration", fn);
     const eventLambdaIntegration = new HttpLambdaIntegration(
-      "CrudIntegration",
+      "EventIntegration",
       eventFunction
     );
 

@@ -162,10 +162,10 @@ const routeHandlers: Record<string, RouteHandler> = {
     // Extract relevant fields
     const {
       tournamentName,
-      startDate,
-      endDate,
       year,
       month,
+      startDate,
+      endDate,
       format,
       divisions,
       debaterPrice,
