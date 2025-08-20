@@ -22,13 +22,17 @@ function RouteComponent() {
   const data = routeApi.useLoaderData();
 
   return (
-    <>
-      <EventForm />
-      <div className="flex flex-wrap justify-center gap-10">
+    <main className="w-[55vw]">
+      <div className="2xl:flex ">
+        <h1 className="text-black"> Debate Tournaments</h1>
+        <EventForm />
+      </div>
+
+      <div className="flex flex-wrap justify-center gap-10 mt-4">
         {data?.map((tournament) => (
           <Card key={tournament.SK} {...tournament} />
         ))}
       </div>
-    </>
+    </main>
   );
 }

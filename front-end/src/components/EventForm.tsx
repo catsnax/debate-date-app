@@ -38,7 +38,6 @@ type FormProp = {
 };
 
 function EventForm() {
-  const [formatValue, setFormatValue] = useState();
   const mutation = useMutation({
     mutationFn: async (tournamentForm: FormProp) => {
       return axios.post(
@@ -75,7 +74,9 @@ function EventForm() {
 
   return (
     <DialogTrigger>
-      <Button className="text-black">Create new event</Button>
+      <Button className="text-white bg-black rounded-md p-2.5 ml-auto">
+        + Create new event
+      </Button>
       <ModalOverlay>
         <Modal>
           <Dialog>
