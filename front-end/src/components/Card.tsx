@@ -34,7 +34,7 @@ function Card(props: CardProps) {
   const secondDate = dateParser(props.endDate);
 
   return (
-    <main className="p-12 bg-white rounded-lg shadow-2xl">
+    <main className="p-12 bg-white rounded-lg shadow-black shadow-sm">
       <div className="flex  text-black flex-col w-[20vw] min-w-60 h-[460px] gap-2">
         <h2 className="text-left font-semibold">{props.tournamentName}</h2>
 

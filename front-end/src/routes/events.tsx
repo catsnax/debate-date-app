@@ -2,9 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import Card from "../components/card";
 import EventForm from "../components/EventForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getRouteApi } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/events")({
   component: RouteComponent,
+  loader: () => fetchEvents(),
 });
 
 async function fetchEvents() {
@@ -16,27 +18,17 @@ async function fetchEvents() {
 }
 
 function RouteComponent() {
-  const { data, isFetching } = useQuery({
-    queryKey: ["events"],
-    queryFn: fetchEvents,
-  });
-
-  console.log(data);
-  console.log(isFetching);
+  const routeApi = getRouteApi("/events");
+  const data = routeApi.useLoaderData();
 
   return (
     <>
       <EventForm />
-
-      {isFetching ? (
-        <div>Loading ... </div>
-      ) : (
-        <div className="flex overflow-auto gap-10">
-          {data?.map((tournament) => (
-            <Card key={tournament.SK} {...tournament} />
-          ))}
-        </div>
-      )}
+      <div className="flex flex-wrap justify-center gap-10">
+        {data?.map((tournament) => (
+          <Card key={tournament.SK} {...tournament} />
+        ))}
+      </div>
     </>
   );
 }
