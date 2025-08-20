@@ -12,6 +12,7 @@ import {
   DeleteCommand,
   UpdateCommand,
 } from "@aws-sdk/lib-dynamodb";
+import { QueryCommand } from "@aws-sdk/lib-dynamodb";
 import { stat } from "fs";
 
 const client = DynamoDBDocumentClient.from(new DynamoDBClient({}));
@@ -137,6 +138,75 @@ const routeHandlers: Record<string, RouteHandler> = {
         }),
       };
     }
+  },
+
+  "GET /events": async (event) => {
+    const queryResult = await client.send(
+      new QueryCommand({
+        TableName: tableName,
+        KeyConditionExpression: "PK = :pk AND begins_with(SK, :sk)",
+        ExpressionAttributeValues: {
+          ":pk": "TOURNAMENTS",
+          ":sk": "TOURNAMENT",
+        },
+      })
+    );
+    return queryResult.Items ?? [];
+  },
+
+  "POST /events": async (event) => {
+    const tableName = "debateDateTable";
+    const timestamp = new Date().toISOString();
+    const inputData = JSON.parse(event.body);
+
+    // Extract relevant fields
+    const {
+      tournamentName,
+      startDate,
+      endDate,
+      year,
+      month,
+      format,
+      divisions,
+      debaterPrice,
+      adjudicatorPrice,
+      ghostJudgeFee,
+      phaseLink,
+      subsidizedLink,
+      tournamentInvite,
+      ...rest
+    } = inputData;
+
+    const newTournament = {
+      PK: `TOURNAMENTS`,
+      SK: `TOURNAMENT#${tournamentName}#${year}#${month}`,
+      tournamentName,
+      startDate,
+      endDate,
+      format,
+      divisions,
+      debaterPrice,
+      adjudicatorPrice,
+      ghostJudgeFee,
+      phaseLink,
+      subsidizedLink,
+      tournamentInvite,
+      createdAt: timestamp,
+    };
+    await client.send(
+      new PutCommand({
+        TableName: tableName,
+        Item: newTournament,
+      })
+    );
+
+    return {
+      statusCode: 201,
+      body: JSON.stringify({
+        message: "Created new tournament",
+        item: newTournament,
+      }),
+    };
   },
 
   "PATCH /items/:id": async (event, id) => {

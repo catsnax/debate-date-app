@@ -29,7 +29,15 @@ export class Try extends Stack {
       functionName: "user-function",
     });
 
+    const eventFunction = new lambda.Function(this, "EventLambda", {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      code: lambda.Code.fromAsset(path.join(__dirname, "../src/dist")),
+      handler: "index.handler",
+      functionName: "event-function",
+    });
+
     table.grantReadWriteData(fn);
+    table.grantReadWriteData(eventFunction);
     const userPool = new cognito.UserPool(this, "TodoUserPool", {
       userPoolName: "todo-user-pool",
       selfSignUpEnabled: true,
@@ -94,6 +102,10 @@ export class Try extends Stack {
     );
 
     const lambdaIntegration = new HttpLambdaIntegration("CrudIntegration", fn);
+    const eventLambdaIntegration = new HttpLambdaIntegration(
+      "CrudIntegration",
+      eventFunction
+    );
 
     httpApi.addRoutes({
       path: "/items",
@@ -114,6 +126,12 @@ export class Try extends Stack {
       methods: [HttpMethod.GET, HttpMethod.POST],
       integration: lambdaIntegration,
       authorizer,
+    });
+
+    httpApi.addRoutes({
+      path: "/events",
+      methods: [HttpMethod.GET, HttpMethod.POST],
+      integration: eventLambdaIntegration,
     });
 
     new CfnOutput(this, "ApiUrl", {
