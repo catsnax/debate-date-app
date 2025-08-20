@@ -17,10 +17,14 @@ import {
 } from "react-aria-components";
 import { ChevronDown } from "lucide-react";
 import { CheckboxGroup, Checkbox } from "react-aria-components";
-import { use, useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useState } from "react";
 
 type FormProp = {
-  name: string;
+  tournamentName: string;
+  year: number;
+  month: number;
   startDate: Date;
   endDate: Date;
   format: string;
@@ -34,14 +38,26 @@ type FormProp = {
 };
 
 function EventForm() {
-  const [formData, setFormData] = useState({} as FormProp);
+  const [formatValue, setFormatValue] = useState();
+  const mutation = useMutation({
+    mutationFn: async (tournamentForm: FormProp) => {
+      return axios.post(
+        `${import.meta.env.VITE_API_URL}/events`,
+        tournamentForm
+      );
+    },
+    onSuccess: () => {
+      close();
+    },
+  });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     const form: FormProp = {
-      name: data.get("name") as string,
+      tournamentName: data.get("name") as string,
+      year: new Date(data.get("startDate") as string).getFullYear() as number,
+      month: new Date(data.get("startDate") as string).getMonth() as number,
       startDate: new Date(data.get("startDate") as string),
       endDate: new Date(data.get("endDate") as string),
       format: data.get("format") as string,
@@ -54,7 +70,7 @@ function EventForm() {
       tournamentInvite: data.get("tournamentInvite") as string,
     };
 
-    console.log(form);
+    mutation.mutate(form);
   };
 
   return (
@@ -107,8 +123,12 @@ function EventForm() {
                 </Button>
                 <Popover>
                   <ListBox>
-                    <ListBoxItem>Asian Parliamentary</ListBoxItem>
-                    <ListBoxItem>British Parliamentary</ListBoxItem>
+                    <ListBoxItem id="Asian Parliamentary">
+                      Asian Parliamentary
+                    </ListBoxItem>
+                    <ListBoxItem id="British Parliamentary">
+                      British Parliamentary
+                    </ListBoxItem>
                   </ListBox>
                 </Popover>
               </Select>
