@@ -3,6 +3,7 @@ import Card from "../components/card";
 import EventForm from "../components/EventForm";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
+import EventCalendar from "../components/events/Calendar";
 
 export const Route = createFileRoute("/events")({
   component: RouteComponent,
@@ -27,8 +28,9 @@ function RouteComponent() {
         <h1 className="text-black"> Debate Tournaments</h1>
         <EventForm />
       </div>
+      <EventCalendar />
 
-      <div className="flex flex-wrap justify-center gap-10 mt-4">
+      <div className="flex flex-wrap justify-center border-2 gap-10 mt-4">
         {data?.map((tournament) => (
           <Card key={tournament.SK} {...tournament} />
         ))}
