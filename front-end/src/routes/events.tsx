@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Card from "../components/card";
 import EventForm from "../components/EventForm";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+//import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import EventCalendar from "../components/events/Calendar";
 
@@ -25,7 +25,6 @@ function RouteComponent() {
   return (
     <main className="w-[55vw]">
       <div className="2xl:flex ">
-        <h1 className="text-black"> Debate Tournaments</h1>
         <EventForm />
       </div>
       <EventCalendar />

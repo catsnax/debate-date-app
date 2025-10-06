@@ -74,9 +74,13 @@ function EventForm() {
 
   return (
     <DialogTrigger>
-      <Button className="text-white bg-black rounded-md p-2.5 ml-auto">
-        + Create new event
-      </Button>
+      <div className="flex items-center bg-white p-4 rounded-md shadow-xs w-full">
+        <h1 className="text-black"> Debate Tournaments</h1>
+
+        <Button className="text-white bg-blue-600 rounded-md p-1.5 ml-auto">
+          + Create new event
+        </Button>
+      </div>
       <ModalOverlay>
         <Modal>
           <Dialog>

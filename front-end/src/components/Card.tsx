@@ -34,9 +34,9 @@ function Card(props: CardProps) {
   const secondDate = dateParser(props.endDate);
 
   return (
-    <main className="p-12 bg-white rounded-lg shadow-black shadow-sm">
+    <main className="p-12 bg-white rounded-lg border-1 border-b-blue-100 shadow-sm">
       <div className="flex  text-black flex-col w-[20vw] min-w-60 h-[460px] gap-2">
-        <h2 className="text-left font-semibold">{props.tournamentName}</h2>
+        <h1 className="text-left font-semibold">{props.tournamentName}</h1>
 
         <div className="flex">
           <Calendar />{" "}
@@ -55,34 +55,34 @@ function Card(props: CardProps) {
         </div>
         <div className="flex gap-2 text-white">
           {props.divisions.includes("Open") ? (
-            <div className="bg-black py-2 px-4 rounded-lg">Open </div>
+            <div className="bg-blue-600 py-2 px-4 rounded-lg">Open </div>
           ) : (
             <></>
           )}
           {props.divisions.includes("Novice") ? (
-            <div className="bg-gray-500 py-2 px-4 rounded-lg">Novice</div>
+            <div className="bg-blue-400 py-2 px-4 rounded-lg">Novice</div>
           ) : (
             <></>
           )}
         </div>
 
-        <div className="flex">
-          {" "}
-          <PhilippinePeso className="w-5" /> <h2> Pricing</h2>{" "}
+        <div className="bg-[#f9fafc] p-4">
+          <div className="flex items-center gap-3">
+            <PhilippinePeso className="size-4" /> <h2> Pricing</h2>{" "}
+          </div>
+          <div className="flex gap-6">
+            <h4 className="text-gray-700">Debater</h4>{" "}
+            <h4 className="ml-auto">₱{props.debaterPrice}</h4>
+          </div>
+          <div className="flex gap-6">
+            <h4 className="text-gray-700"> Adjudicator</h4>{" "}
+            <h4 className="ml-auto">₱{props.adjudicatorPrice}</h4>
+          </div>
+          <div className="flex gap-6">
+            <h4 className="text-gray-700"> Ghost Judge Fee</h4>{" "}
+            <h4 className="ml-auto">₱{props.ghostJudgeFee}</h4>
+          </div>
         </div>
-        <div className="flex gap-6">
-          <h4 className="text-gray-700">Debater</h4>{" "}
-          <h4 className="ml-auto">₱{props.debaterPrice}</h4>
-        </div>
-        <div className="flex gap-6">
-          <h4 className="text-gray-700"> Adjudicator</h4>{" "}
-          <h4 className="ml-auto">₱{props.adjudicatorPrice}</h4>
-        </div>
-        <div className="flex gap-6">
-          <h4 className="text-gray-700"> Ghost Judge Fee</h4>{" "}
-          <h4 className="ml-auto">₱{props.ghostJudgeFee}</h4>
-        </div>
-
         <div> Registration</div>
         <Link
           className="text-black bg-white border-gray-300 border-2 p-1 px-2 flex"
@@ -95,22 +95,20 @@ function Card(props: CardProps) {
         </Link>
 
         <Link
-          className="text-black bg-white border-gray-300 border-2 p-1 px-2 flex"
-          href={props.phaseLink}
-          target="_blank"
-        >
-          {" "}
-          Phase 1 Registration
-          <SquareArrowOutUpRight className="ml-auto" />
-        </Link>
-
-        <Link
           className="text-black bg-white border-gray-300 border-2  p-1 px-2 flex"
           href={props.tournamentInvite}
           target="_blank"
         >
           {" "}
           Tournament Invite
+          <SquareArrowOutUpRight className="ml-auto" />
+        </Link>
+        <Link
+          className=" bg-blue-600 border-gray-300 border-2 p-1 px-2 flex"
+          href={props.phaseLink}
+          target="_blank"
+        >
+          <h2 className="text-white">Phase 1 Link</h2>
           <SquareArrowOutUpRight className="ml-auto" />
         </Link>
       </div>
