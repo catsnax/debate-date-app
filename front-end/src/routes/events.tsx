@@ -5,6 +5,23 @@ import EventForm from "../components/EventForm";
 import { getRouteApi } from "@tanstack/react-router";
 import EventCalendar from "../components/events/Calendar";
 
+type Tournament = {
+  PK: string;
+  SK: string;
+  adjudicatorPrice: number;
+  createdAt: string;
+  debaterPrice: number;
+  divisions: string[];
+  endDate: string;
+  format: string;
+  ghostJudgeFee: number;
+  phaseLink: string;
+  startDate: string;
+  subsidizedLink: string;
+  tournamentInvite: string;
+  tournamentName: string;
+};
+
 export const Route = createFileRoute("/events")({
   component: RouteComponent,
   loader: () => fetchEvents(),
@@ -21,6 +38,7 @@ async function fetchEvents() {
 function RouteComponent() {
   const routeApi = getRouteApi("/events");
   const data = routeApi.useLoaderData();
+  console.log(data);
 
   return (
     <main className="w-[55vw]">
@@ -30,7 +48,7 @@ function RouteComponent() {
       <EventCalendar />
 
       <div className="flex flex-wrap justify-center border-2 gap-10 mt-4">
-        {data?.map((tournament) => (
+        {data?.map((tournament: Tournament) => (
           <Card key={tournament.SK} {...tournament} />
         ))}
       </div>

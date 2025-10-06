@@ -6,7 +6,6 @@ import { Link } from "react-aria-components";
 import { SquareArrowOutUpRight } from "lucide-react";
 
 interface CardProps {
-  isFetching: boolean;
   tournamentName: string;
   startDate: string;
   endDate: string;
@@ -34,7 +33,7 @@ function Card(props: CardProps) {
   const secondDate = dateParser(props.endDate);
 
   return (
-    <main className="p-12 bg-white rounded-lg border-1 border-b-blue-100 shadow-sm">
+    <main className="p-11 bg-white rounded-lg border-1 border-b-blue-100 shadow-sm">
       <div className="flex  text-black flex-col w-[20vw] min-w-60 h-[460px] gap-2">
         <h1 className="text-left font-semibold">{props.tournamentName}</h1>
 
